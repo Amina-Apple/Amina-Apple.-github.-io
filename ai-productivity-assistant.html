@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Aamina Mongwe - AI-Powered Workplace Productivity Assistant live prototype">
+<title>AI Productivity Assistant | Aamina Mongwe</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:#f5f7fb;color:#172033}header{background:#172033;color:#fff;padding:24px 6%}header h1{margin:0 0 6px;font-size:30px}header p{margin:0;color:#dbe3f0}.wrap{max-width:1150px;margin:0 auto;padding:28px 18px}.badge{display:inline-block;padding:7px 12px;border-radius:999px;background:#e8eefc;color:#244a9b;font-weight:700;font-size:13px}.grid{display:grid;grid-template-columns:300px 1fr;gap:22px}.panel,.result{background:#fff;border:1px solid #dde3ee;border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(23,32,51,.06)}.buttons{display:grid;gap:10px;margin-top:15px}.mode{border:1px solid #ccd5e4;background:#fff;padding:13px;border-radius:10px;text-align:left;cursor:pointer;font-weight:700;color:#25324a}.mode:hover,.mode.active{background:#edf2ff;border-color:#5874c9}.field{margin:14px 0}.field label{display:block;font-weight:700;margin-bottom:7px}textarea,input,select{width:100%;padding:12px;border:1px solid #ccd5e4;border-radius:10px;font:inherit;background:#fff}textarea{min-height:220px;resize:vertical}.run{width:100%;margin-top:10px;padding:13px;border:0;border-radius:10px;background:#3156b8;color:white;font-weight:800;cursor:pointer}.run:hover{background:#27489b}.result{min-height:430px}.result h2{margin-top:0}.output{white-space:pre-wrap;line-height:1.65;color:#2a3447}.notice{margin-top:18px;padding:14px;border-left:4px solid #3156b8;background:#f0f4ff;border-radius:8px;font-size:14px}.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.chip{padding:7px 10px;background:#eef1f6;border-radius:999px;font-size:12px}.footer{text-align:center;color:#68748a;padding:25px;font-size:13px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><span class="badge">LIVE GITHUB PROTOTYPE</span><h1>AI-Powered Workplace Productivity Assistant</h1><p>Interactive demonstration by Aamina Mongwe • 17 September 2026</p></div></header>
+<main class="wrap">
+<div class="grid">
+<aside class="panel"><h2>Choose a function</h2><div class="buttons">
+<button class="mode active" data-mode="email">✉ Smart Email Generator</button>
+<button class="mode" data-mode="meeting">📝 Meeting Notes Summarizer</button>
+<button class="mode" data-mode="planner">📅 AI Task Planner</button>
+<button class="mode" data-mode="research">🔎 AI Research Assistant</button>
+<button class="mode" data-mode="chat">💬 Workplace Chatbot</button>
+</div><div class="notice"><b>Responsible AI:</b> Review AI-generated information before professional use. Do not enter confidential information unless your workplace policy permits it.</div></aside>
+<section class="panel">
+<div class="field"><label id="contextLabel">Describe the email you need</label><textarea id="input">Please draft an email to my manager requesting a one-day extension on a report. Keep the tone respectful and formal. Do not invent a reason.</textarea></div>
+<div id="extra" class="field"><label>Output preference</label><select id="tone"><option>Formal</option><option>Informal</option><option>Persuasive</option></select></div>
+<button class="run" id="run">Generate demonstration output</button>
+</section>
+</div>
+<section class="result" style="margin-top:22px"><h2 id="resultTitle">Smart Email Generator</h2><div class="chips" id="chips"><span class="chip">Audience-aware</span><span class="chip">Tone control</span><span class="chip">No invented facts</span></div><div class="output" id="output">Your demonstration result will appear here.</div></section>
+</main><div class="footer">Aamina Mongwe • AI Productivity Assistant • Prototype for academic/project demonstration</div>
+<script>
+let mode='email';
+const configs={
+ email:{label:'Describe the email you need',placeholder:'Example: Ask a manager for a one-day extension on a report.',title:'Smart Email Generator',chips:['Audience-aware','Tone control','No invented facts'],extra:true},
+ meeting:{label:'Paste meeting notes',placeholder:'Example: The team agreed to launch Friday. Thandi will prepare the report by Wednesday. Sipho will contact the client. Follow-up meeting Monday.',title:'Meeting Notes Summarizer',chips:['Summary','Decisions','Action items','Deadlines'],extra:false},
+ planner:{label:'Enter your tasks and deadlines',placeholder:'Example: Finish report - due Friday; reply to client - due today; prepare presentation - due next week.',title:'AI Task Planner',chips:['Urgency','Importance','Time blocks','Breaks'],extra:false},
+ research:{label:'Enter a topic or supplied research text',placeholder:'Example: Explain the main benefits and limitations of using AI for workplace productivity.',title:'AI Research Assistant',chips:['Plain language','Key insights','Limitations','Verification'],extra:false},
+ chat:{label:'Ask the workplace assistant a question',placeholder:'Example: Help me organize the tasks I need to complete today.',title:'Workplace Chatbot',chips:['Task detection','Context questions','Structured answer'],extra:false}
+};
+const input=document.getElementById('input'),label=document.getElementById('contextLabel'),title=document.getElementById('resultTitle'),output=document.getElementById('output'),chips=document.getElementById('chips'),extra=document.getElementById('extra');
+function selectMode(m){mode=m;document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));let c=configs[m];label.textContent=c.label;input.placeholder=c.placeholder;input.value='';title.textContent=c.title;chips.innerHTML=c.chips.map(x=>`<span class="chip">${x}</span>`).join('');extra.style.display=c.extra?'block':'none';output.textContent='Enter information and select “Generate demonstration output”.'}
+document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>selectMode(b.dataset.mode)));
+document.getElementById('run').addEventListener('click',()=>{
+const text=input.value.trim()||input.placeholder;
+if(mode==='email') output.textContent=`Subject: Request for Report Deadline Extension\n\nDear Manager,\n\nI am writing to request a one-day extension for the report. I would appreciate the additional time to complete and submit the report.\n\nPlease let me know if this revised deadline would be acceptable.\n\nKind regards,\nAamina Mongwe\n\nReview before sending: confirm the reason, requested date and recipient.`;
+if(mode==='meeting') output.textContent=`MEETING SUMMARY\n\nKey points:\n• The team discussed the project launch and preparation of the required report.\n\nDecisions:\n• Launch planned for Friday.\n\nAction items:\n• Thandi — prepare the report — Wednesday.\n• Sipho — contact the client — deadline not specified.\n\nNext meeting:\n• Monday.\n\nVerification note: Confirm names, dates and responsibilities against the original notes.`;
+if(mode==='planner') output.textContent=`PRIORITIZED WORK PLAN\n\n1. Reply to client — highest priority because it is due today.\n2. Finish report — next priority because it is due Friday.\n3. Prepare presentation — schedule after urgent work because it is due next week.\n\nSuggested structure:\n09:00–10:00 Client response\n10:00–10:15 Break\n10:15–12:15 Report\n12:15–13:00 Lunch\n13:00–14:30 Report\n14:30–15:30 Presentation preparation\n\nAssumption: exact workload durations were not provided, so the time blocks are estimates.`;
+if(mode==='research') output.textContent=`PLAIN-LANGUAGE SUMMARY\n\nAI can support workplace productivity by helping draft routine communications, summarize information, organize tasks and support research.\n\nKey insights:\n1. Repetitive drafting can be assisted by generative AI.\n2. Structured prompts can improve consistency.\n3. Human review remains important because AI can make errors.\n4. Privacy and confidentiality must be considered.\n5. Productivity improvements should be measured rather than assumed.\n\nLimitations / verification:\n• Check important facts against reliable sources.\n• Do not treat generated content as automatically correct.`;
+if(mode==='chat') output.textContent=`WORKPLACE ASSISTANT\n\nI identified your request as a task-planning activity.\n\nSuggested next step:\n1. List the tasks you need to complete.\n2. Add deadlines and estimated effort.\n3. Identify anything that is urgent.\n4. I can then organize the work into a practical schedule.\n\nResponsible-AI reminder: I will not assume missing deadlines or priorities.`;
+});
+</script>
+</body></html>
